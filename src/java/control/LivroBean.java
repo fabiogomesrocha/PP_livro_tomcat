@@ -28,11 +28,14 @@ public class LivroBean implements Serializable {
     private String resumo;
     private String observacao;
     private String localizacao;
+
     public LivroBean() {
     }
-    public String cadastrar(){
+
+    public String cadastrar() {
         return "exibirLivro";
     }
+
     public String getTitulo() {
         return titulo;
     }
@@ -96,5 +99,5 @@ public class LivroBean implements Serializable {
     public void setLocalizacao(String localizacao) {
         this.localizacao = localizacao;
     }
-    
+
 }

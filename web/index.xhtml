@@ -7,41 +7,27 @@
     <h:head>
         <title>Facelet Title</title>
     </h:head>
-    <h:body style="padding-top: 50px; padding-bottom: 20px;">
-        <b:navBar brand="PP-Livro" brandHref="index.xhtml" inverse="true" fixed="top">
-            <b:navbarLinks>
-                <b:navLink value="Cadastrar Livro" href="cadLivro.xhtml" />
-                <b:navLink value="Exibir Livro" href="listarLivro.xhtml" />
-                
-            </b:navbarLinks>
-        </b:navBar>
-        <b:jumbotron>
-            <h2>Cadastro de livros</h2><p />
-        <h:form>
-            Titulo: <b:inputText value="#{livroBean.titulo}"  required="true" required-message="Coloca o titulo zé" /> <br />
-            Autores: <b:inputText value="#{livroBean.autores}" /> <br />
-            Editora: <b:inputText value="#{livroBean.editora}" /> <br />
-            Cidade da Editora: <b:inputText value="#{livroBean.cidadeEd}" /> <br />
-            Data da publicação: : <b:inputText value="#{livroBean.dataPublicacao}" /> <br />
-            Resumo<br />
-            <b:inputTextarea value="#{livroBean.resumo}" /><br />
-            Observação<br />
-            <b:inputTextarea value="#{livroBean.observacao}" /> <br />
-            Localização: <b:inputText value="#{livroBean.localizacao}" /> <br />
-            <b:commandButton value="Cadastrar" action="#{livroBean.cadastrar()}" />
-          
-        </h:form>
-        </b:jumbotron>
-        <b:container>
-            <b:row>
-                <b:column col-md="6">
-                    <h2>#{livroBean.autores}. #{livroBean.titulo}</h2>
-                </b:column>
-                <b:column col-md="6">
-                    <h2>#{livroBean.titulo}</h2>
-                </b:column>
-            </b:row>
-        </b:container>
+    <h:body>
+        <ui:composition template="./WEB-INF/template/modelo.xhtml">
+            <ui:define name="principal">
+
+                <h2>Cadastro de livros</h2><p />
+                <h:form>
+                    Titulo: <b:inputText value="#{livroBean.titulo}"  required="true" required-message="Coloca o titulo zé" /> <br />
+                    Autores: <b:inputText value="#{livroBean.autores}" /> <br />
+                    Editora: <b:inputText value="#{livroBean.editora}" /> <br />
+                    Cidade da Editora: <b:inputText value="#{livroBean.cidadeEd}" /> <br />
+                    Data da publicação: : <b:inputText value="#{livroBean.dataPublicacao}" /> <br />
+                    Resumo<br />
+                    <b:inputTextarea value="#{livroBean.resumo}" /><br />
+                    Observação<br />
+                    <b:inputTextarea value="#{livroBean.observacao}" /> <br />
+                    Localização: <b:inputText value="#{livroBean.localizacao}" /> <br />
+                    <b:commandButton value="Cadastrar" action="#{livroBean.cadastrar()}" />
+
+                </h:form>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>
 
