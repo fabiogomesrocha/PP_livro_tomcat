@@ -8,24 +8,24 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <ui:composition template="./WEB-INF/template/modelo.xhtml">
+               <ui:composition template="./WEB-INF/template/modelo.xhtml">
             <ui:define name="principal">
-
-                <h2>Cadastro de livros</h2><p />
-                <h:form>
-                    Titulo: <b:inputText value="#{livroBean.titulo}"  required="true" required-message="Coloca o titulo zé" /> <br />
-                    Autores: <b:inputText value="#{livroBean.autores}" /> <br />
-                    Editora: <b:inputText value="#{livroBean.editora}" /> <br />
-                    Cidade da Editora: <b:inputText value="#{livroBean.cidadeEd}" /> <br />
-                    Data da publicação: : <b:inputText value="#{livroBean.dataPublicacao}" /> <br />
-                    Resumo<br />
-                    <b:inputTextarea value="#{livroBean.resumo}" /><br />
-                    Observação<br />
-                    <b:inputTextarea value="#{livroBean.observacao}" /> <br />
-                    Localização: <b:inputText value="#{livroBean.localizacao}" /> <br />
-                    <b:commandButton value="Cadastrar" action="#{livroBean.cadastrar()}" />
-
-                </h:form>
+                
+            <h2>Cadastro de livros</h2><p />
+        <h:form>
+            Titulo: <b:inputText value="#{livroBean.titulo}"  required="true" required-message="Coloca o titulo zé" /> <br />
+            Autores: <b:inputText value="#{livroBean.autores}" /> <br />
+            Editora: <b:inputText value="#{livroBean.editora}" /> <br />
+            Cidade da Editora: <b:inputText value="#{livroBean.cidadeEd}" /> <br />
+            Data da publicação: : <b:inputText value="#{livroBean.dataPublicacao}" /> <br />
+            Resumo<br />
+            <b:inputTextarea value="#{livroBean.resumo}" /><br />
+            Observação<br />
+            <b:inputTextarea value="#{livroBean.observacao}" /> <br />
+            Localização: <b:inputText value="#{livroBean.localizacao}" /> <br />
+            <b:commandButton value="Cadastrar" action="#{livroBean.cadastrar()}" />
+          
+        </h:form>
             </ui:define>
         </ui:composition>
     </h:body>
