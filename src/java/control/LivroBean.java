@@ -8,6 +8,10 @@ package control;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import model.Livros;
 
 /**
  *
@@ -31,6 +35,19 @@ public class LivroBean implements Serializable {
     public LivroBean() {
     }
     public String cadastrar(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("PP_PU");
+        EntityManager em = emf.createEntityManager();
+        Livros livros = new Livros();
+        livros.setTitulo(titulo);
+        livros.setAutores(autores);
+        livros.setEditora(editora);
+        livros.setDataPublicacao(dataPublicacao);
+        livros.setLocalizacao(localizacao);
+        livros.setObservacao(observacao);
+        livros.setResumo(resumo);
+        em.persist(livros);
+        em.close();
+        emf.close();
         return "exibirLivro";
     }
     public String getTitulo() {
