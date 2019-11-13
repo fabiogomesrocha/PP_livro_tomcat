@@ -6,11 +6,13 @@
 package control;
 
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import java.sql.*;
+import java.util.ArrayList;
+import model.Livro;
 import model.Livros;
 
 /**
@@ -32,10 +34,75 @@ public class LivroBean implements Serializable {
     private String resumo;
     private String observacao;
     private String localizacao;
+    private ArrayList<Livro> livros;
+    private Livro livro;
+
+    public ArrayList<Livro> getLivros() {
+        String mariadb = "jdbc:mariadb://localhost:3306/livro";
+        String user = "root";
+        String passwd = "";
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+            Connection con = DriverManager.getConnection(mariadb, user, passwd);
+            Statement stm = con.createStatement();
+            
+            String consulta = "select * from livros";
+            ResultSet rs = stm.executeQuery(consulta);
+            while(rs.next()){
+                livro = new Livro();
+                livro.setTitulo(rs.getString("titulo"));
+                livro.setEditora(rs.getString("editora"));
+                livro.setCidadeEd(rs.getString("cidade"));
+                livro.setDataPublicacao(rs.getString("dataPublicacao"));
+                livros.add(livro);
+         
+            }
+            rs.close();
+            con.close();
+            
+                    
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(LivroBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(LivroBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return livros;
+    }
+
+    
+    
     public LivroBean() {
+        livros = new ArrayList<Livro>();
     }
     public String cadastrar(){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("PP_PU");
+        String mariadb = "jdbc:mariadb://localhost:3306/livro";
+        String user = "root";
+        String passwd = "";
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+            Connection con = DriverManager.getConnection(mariadb, user, passwd);
+            String consulta = "INSERT INTO livros (titulo, autores, editora, cidade, dataPublicacao, resumo, observacao, localizacao) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+            PreparedStatement pstm = con.prepareStatement(consulta);
+            pstm.setString(1, titulo);
+            pstm.setString(2, autores);
+            pstm.setString(3, editora);
+            pstm.setString(4, cidadeEd);
+            pstm.setString(5, dataPublicacao);
+            pstm.setString(6, resumo);
+            pstm.setString(7, observacao);
+            pstm.setString(8, localizacao);
+            pstm.execute();
+            con.close();
+            
+                    
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(LivroBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(LivroBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        /*EntityManagerFactory emf = Persistence.createEntityManagerFactory("PP_PU");
         EntityManager em = emf.createEntityManager();
         Livros livros = new Livros();
         livros.setTitulo(titulo);
@@ -48,6 +115,7 @@ public class LivroBean implements Serializable {
         em.persist(livros);
         em.close();
         emf.close();
+        */
         return "exibirLivro";
     }
     public String getTitulo() {

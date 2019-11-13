@@ -10,9 +10,17 @@
     <h:body style="padding-top: 50px; padding-bottom: 20px;">
         <ui:composition template="./WEB-INF/template/modelo.xhtml">
             <ui:define name="principal">
-                Titulo: #{livroBean.titulo}
-                Autor(es): #{livroBean.autores}
-                Editora: #{livroBean.editora}
+                O Titulo: #{livroBean.titulo} foi cadastrado com sucesso! <p />
+                <h:form>
+                    <b:dataTable value="#{livroBean.livros}"
+                                 var="livro">
+                        <b:dataTableColumn value="#{livro.titulo}" />
+                        <b:dataTableColumn value="#{livro.editora}" />
+                        <b:dataTableColumn value="#{livro.cidadeEd}" />
+                        <b:dataTableColumn value="#{livro.dataPublicacao}" />
+
+                    </b:dataTable>
+                </h:form>
             </ui:define>
         </ui:composition>
     </h:body>
