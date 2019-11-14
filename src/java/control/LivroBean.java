@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.sql.*;
 import java.util.ArrayList;
+import model.BancoUtil;
 import model.Livro;
 import model.Livros;
 
@@ -36,15 +37,14 @@ public class LivroBean implements Serializable {
     private String localizacao;
     private ArrayList<Livro> livros;
     private Livro livro;
+    private BancoUtil bu;
 
     public ArrayList<Livro> getLivros() {
-        String mariadb = "jdbc:mariadb://localhost:3306/livro";
-        String user = "root";
-        String passwd = "";
+       
         try {
-            Class.forName("org.mariadb.jdbc.Driver");
-            Connection con = DriverManager.getConnection(mariadb, user, passwd);
-            Statement stm = con.createStatement();
+            bu = new BancoUtil();
+            
+            Statement stm = bu.con().createStatement();
             
             String consulta = "select * from livros";
             ResultSet rs = stm.executeQuery(consulta);
@@ -58,11 +58,7 @@ public class LivroBean implements Serializable {
          
             }
             rs.close();
-            con.close();
-            
-                    
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(LivroBean.class.getName()).log(Level.SEVERE, null, ex);
+            bu.con().close();                   
         } catch (SQLException ex) {
             Logger.getLogger(LivroBean.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -72,18 +68,14 @@ public class LivroBean implements Serializable {
     
     
     public LivroBean() {
-        livros = new ArrayList<Livro>();
     }
     public String cadastrar(){
-        String mariadb = "jdbc:mariadb://localhost:3306/livro";
-        String user = "root";
-        String passwd = "";
-        try {
-            Class.forName("org.mariadb.jdbc.Driver");
-            Connection con = DriverManager.getConnection(mariadb, user, passwd);
+         try {
+            bu = new BancoUtil();
+            
             String consulta = "INSERT INTO livros (titulo, autores, editora, cidade, dataPublicacao, resumo, observacao, localizacao) "
                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-            PreparedStatement pstm = con.prepareStatement(consulta);
+            PreparedStatement pstm = bu.con().prepareStatement(consulta);
             pstm.setString(1, titulo);
             pstm.setString(2, autores);
             pstm.setString(3, editora);
@@ -93,11 +85,8 @@ public class LivroBean implements Serializable {
             pstm.setString(7, observacao);
             pstm.setString(8, localizacao);
             pstm.execute();
-            con.close();
+            bu.con().close();
             
-                    
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(LivroBean.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(LivroBean.class.getName()).log(Level.SEVERE, null, ex);
         }
