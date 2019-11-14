@@ -13,7 +13,9 @@
                 O Titulo: #{livroBean.titulo} foi cadastrado com sucesso! <p />
                 <h:form>
                     <b:dataTable value="#{livroBean.livros}"
-                                 var="livro">
+                                 var="livro" excel="true"
+               csv="true"
+               pdf="true">
                         <b:dataTableColumn value="#{livro.titulo}" />
                         <b:dataTableColumn value="#{livro.editora}" />
                         <b:dataTableColumn value="#{livro.cidadeEd}" />
